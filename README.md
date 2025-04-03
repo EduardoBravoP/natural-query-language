@@ -21,6 +21,7 @@ The system uses:
 - PostgreSQL for main data storage (users, books, purchases)
 - Redis for caching and real-time analytics
 - Groq AI model for natural language understanding
+- Vercel AI SDK for orchestrating LLM
 - TypeScript/Node.js backend
 
 ## 💡 Example Usage
