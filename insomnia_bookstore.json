@@ -1,0 +1,265 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2024-03-14T10:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v8.6.0",
+  "resources": [
+    {
+      "_id": "env_base",
+      "parentId": "wrk_bookstore",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "name": "Base Environment",
+      "data": {
+        "baseUrl": "http://localhost:3000/api"
+      },
+      "dataPropertyOrder": {
+        "&": ["baseUrl"]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1710408000000,
+      "_type": "environment"
+    },
+    {
+      "_id": "wrk_bookstore",
+      "parentId": null,
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "name": "Bookstore API",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "fld_users",
+      "parentId": "wrk_bookstore",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "name": "Users",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1710408000000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_create_user",
+      "parentId": "fld_users",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "url": "{{ _.baseUrl }}/users",
+      "name": "Create User",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"John Doe\",\n\t\"email\": \"john@example.com\",\n\t\"password\": \"123456\",\n\t\"phone\": \"+1234567890\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_users",
+      "parentId": "fld_users",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "url": "{{ _.baseUrl }}/users",
+      "name": "List Users",
+      "description": "",
+      "method": "GET",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_user",
+      "parentId": "fld_users",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "url": "{{ _.baseUrl }}/users/{% response 'body', 'req_create_user', 'b64::JC5pZA==::46b', 'never', 60 %}",
+      "name": "Get User",
+      "description": "",
+      "method": "GET",
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_user",
+      "parentId": "fld_users",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "url": "{{ _.baseUrl }}/users/{% response 'body', 'req_create_user', 'b64::JC5pZA==::46b', 'never', 60 %}",
+      "name": "Update User",
+      "description": "",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"John Doe Updated\",\n\t\"email\": \"john.updated@example.com\",\n\t\"phone\": \"+1987654321\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "req_delete_user",
+      "parentId": "fld_users",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "url": "{{ _.baseUrl }}/users/{% response 'body', 'req_create_user', 'b64::JC5pZA==::46b', 'never', 60 %}",
+      "name": "Delete User",
+      "description": "",
+      "method": "DELETE",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_books",
+      "parentId": "wrk_bookstore",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "name": "Books",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1710407000000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_create_book",
+      "parentId": "fld_books",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "url": "{{ _.baseUrl }}/books",
+      "name": "Create Book",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"title\": \"The Great Gatsby\",\n\t\"author\": \"F. Scott Fitzgerald\",\n\t\"publisher\": \"Scribner\",\n\t\"publicationYear\": 1925,\n\t\"price\": 29.99,\n\t\"stockQuantity\": 50,\n\t\"genre\": \"Fiction\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_books",
+      "parentId": "fld_books",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "url": "{{ _.baseUrl }}/books",
+      "name": "List Books",
+      "description": "",
+      "method": "GET",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_book",
+      "parentId": "fld_books",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "url": "{{ _.baseUrl }}/books/{% response 'body', 'req_create_book', 'b64::JC5pZA==::46b', 'never', 60 %}",
+      "name": "Get Book",
+      "description": "",
+      "method": "GET",
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_book",
+      "parentId": "fld_books",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "url": "{{ _.baseUrl }}/books/{% response 'body', 'req_create_book', 'b64::JC5pZA==::46b', 'never', 60 %}",
+      "name": "Update Book",
+      "description": "",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"title\": \"The Great Gatsby\",\n\t\"author\": \"F. Scott Fitzgerald\",\n\t\"publisher\": \"Scribner\",\n\t\"publicationYear\": 1925,\n\t\"price\": 34.99,\n\t\"stockQuantity\": 45,\n\t\"genre\": \"Fiction\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "req_delete_book",
+      "parentId": "fld_books",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "url": "{{ _.baseUrl }}/books/{% response 'body', 'req_create_book', 'b64::JC5pZA==::46b', 'never', 60 %}",
+      "name": "Delete Book",
+      "description": "",
+      "method": "DELETE",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_purchases",
+      "parentId": "wrk_bookstore",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "name": "Purchases",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1710406000000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_create_purchase",
+      "parentId": "fld_purchases",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "url": "{{ _.baseUrl }}/purchases",
+      "name": "Create Purchase",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"userId\": \"{% response 'body', 'req_create_user', 'b64::JC5pZA==::46b', 'never', 60 %}\",\n\t\"items\": [\n\t\t{\n\t\t\t\"bookId\": \"{% response 'body', 'req_create_book', 'b64::JC5pZA==::46b', 'never', 60 %}\",\n\t\t\t\"quantity\": 2\n\t\t}\n\t]\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_purchases",
+      "parentId": "fld_purchases",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "url": "{{ _.baseUrl }}/purchases",
+      "name": "List Purchases",
+      "description": "",
+      "method": "GET",
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_purchase",
+      "parentId": "fld_purchases",
+      "modified": 1710408000000,
+      "created": 1710408000000,
+      "url": "{{ _.baseUrl }}/purchases/{% response 'body', 'req_create_purchase', 'b64::JC5pZA==::46b', 'never', 60 %}",
+      "name": "Get Purchase",
+      "description": "",
+      "method": "GET",
+      "_type": "request"
+    }
+  ]
+} 
