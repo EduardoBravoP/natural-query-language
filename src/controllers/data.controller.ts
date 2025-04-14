@@ -1,42 +1,51 @@
-import { Request, Response } from 'express';
 import { groq } from '@ai-sdk/groq';
 import { generateText, tool } from 'ai';
+import { Request, Response } from 'express';
+import { postgresPrompt, redisPrompt, systemPrompt } from '../utils/prompts';
 import { z } from 'zod';
 import { AppDataSource } from '../config/database';
-import { postgresPrompt, redisPrompt, systemPrompt } from '../utils/prompts';
 import { redisClient } from '../config/redis';
 
 export const getData = async (req: Request, res: Response) => {
   const { question } = req.body;
 
   const result = await generateText({
-    model: groq('qwen-qwq-32b'),
+    model: groq("qwen-qwq-32b"),
     prompt: question,
+    system: systemPrompt,
     tools: {
       executePostgresQuery: tool({
         description: postgresPrompt,
-        parameters: z.object({
-          query: z.string().describe('A query SQL a ser executada no banco de dados')
-        }),
-        execute: async ({ query }) => {
-          const result = await AppDataSource.query(query);
+        execute: async ({ query, parameters }) => {
+          console.log('query', query)
+          console.log('parameters', parameters)
+
+          const result = await AppDataSource.query(query, parameters);
           return JSON.stringify(result);
         },
+        parameters: z.object({
+          query: z.string().describe("Query SQL a ser executado"),
+          parameters: z.array(z.string()).describe("Parametros a ser executados")
+        })
       }),
-      executeRedisQuery: tool({
+      executeRedisCommand: tool({
         description: redisPrompt,
-        parameters: z.object({
-          query: z.string().describe('O comando Redis a ser executado')
-        }),
-        execute: async ({ query }) => {
-          const result = await redisClient.call(query);
+        execute: async ({ command, args }) => {
+          console.log('command', command)
+
+          const result = await redisClient.call(command, args);
           return JSON.stringify(result);
         },
+        parameters: z.object({
+          command: z.string().describe("Comando do Redis a ser executado"),
+          args: z.array(z.string()).describe("Os argumentos passados depois do comando Redis")
+        })
       })
     },
-    system: systemPrompt,
     maxSteps: 5
   });
-  
-  return res.status(200).json({ answer: result.text });
-};
+
+  console.log('result', result)
+
+  res.json({ answer: result.text })
+}
